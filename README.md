@@ -1,1 +1,13 @@
 # Projecto1_Asoldado_ETamano_Jcanas
+-Definició joc
+
+
+-Instruccións instal·lació del projecte
+
+
+-Instruccións ús del projecte
+
+
+-Informació de contacte membres grup (nom i gmail)
+
+
