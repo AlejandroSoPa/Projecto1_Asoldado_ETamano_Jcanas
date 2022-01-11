@@ -53,41 +53,7 @@ while flag_0:
             else:
                 break
 
-        while True:
-            password = input("\n" + "Password: ")
-            if len(password) < 8:
-                print("Password is too short")
-            else:
-                blank = False
-                ucase = False
-                lcase = False
-                num = False
-                special = False
-                for i in password:
-                    if i == " ":
-                        blank = True
-                        break
-                    elif i.islower():
-                        lcase = True
-                    elif i.isupper():
-                        ucase = True
-                    elif i.isdigit():
-                        num = True
-                    elif i.isalnum() == False:
-                        special = True
 
-                if blank == True:
-                    print("Password cannot contain blank spaces")
-                elif lcase == False:
-                    print("Password must contain at least one lowercase letter")
-                elif ucase == False:
-                    print("Password must contain at least one uppercase letter")
-                elif num == False:
-                    print("Password must contain at least one number")
-                elif special == False:
-                    print("Password must contain at least one special character")
-                else:
-                    break
 
         if checkUserbbdd(username, password) != 0:
             print("User already exists")
