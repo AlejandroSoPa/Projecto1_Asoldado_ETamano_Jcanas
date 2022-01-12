@@ -1,14 +1,10 @@
 * {
 	font-family: 'Courier';
-	text-decoration: none;
-	margin: 0px;
-	padding: 0px;
-}
-p {
 	color: white;
 }
 
 body {
+	margin: 0px;
 	background: #36393f;
 }
 
@@ -56,9 +52,6 @@ body {
 	border-bottom: #489d3b solid 5px;
 	border-top-right-radius: 50px;
 	border-bottom-right-radius: 50px;
-}
-#internalLinks a {
-	border-bottom: #489d3b solid 5px;
 }
 #header a {
 	text-decoration: none;
@@ -154,100 +147,38 @@ body {
 
 
 
-#contents {
-	margin: 5px 75px;
-}
-#title {
+.apartat {
 	background: #43474f;
 	border-radius: 20px;
 	margin: 5px 10px;
-	padding: 10px;
-	border-bottom: #489d3b solid 5px;
-	margin-top: 5px;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: 1;
-}
-#title h1 {
-	font-size: 100px;
-}
-#title h2 {
-}
-
-#index {
-	margin: 5px 10px;
-	padding: 10px;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: 1;
-}
-#index h2 {
-	font-size: 50px;
-	margin: 5px auto;
-}
-#index a {
-	margin: 5px auto;
-}
-#what1 {
-	position: relative;
-	height: 75px;
-}
-#what {
-	background: #43474f;
-	border-radius: 20px;
-	margin: 5px 10px;
-	padding: 10px;
-	border-bottom: #489d3b solid 5px;
-	display: grid;
-	grid-template-columns: auto auto;
-	grid-template-rows: auto auto;
-	grid-template-areas: 
-	'area1 area2'
-	'area3 area2';
-}
-#what a {
-grid-area: area1;
-margin: 5px auto;
-}
-#what p {
-grid-area: area3;
-margin: 5px auto;
-text-align: center;
-width: 500px;
-}
-#what img {
-grid-area: area2;
-width: 200px;
-height: 200px;
-}
-
-#howTo {
-	background: #43474f;
-	border-radius: 20px;
-	margin: 5px 10px;
-	padding: 10px;
+	padding: 5px;
 	border-bottom: #489d3b solid 5px;
 }
-
-#where {
-	background: #43474f;
-	border-radius: 20px;
-	margin: 5px 10px;
-	padding: 10px;
-	border-bottom: #489d3b solid 5px;
-}
-.text {
-	color: white;
-}
-
-.subtitle {
-	color: #489d3b;
-	font-size: 20px;
-}
-
 .spacer {
 	height: 75px;
 	background: transparent;
 	border: none;
+}
+
+#contents {
+	background: #36393f;
+	margin: 10px;
+}
+
+#title {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: 1;
+	text-align: center;
+}
+#title h1 {
+	font-size: 75px;
+	margin: 5px;
+}
+
+#direccions h2 {
+	margin: 20px 5px;
+}
+#direccions p {
+	margin: 20px 5px;
 }

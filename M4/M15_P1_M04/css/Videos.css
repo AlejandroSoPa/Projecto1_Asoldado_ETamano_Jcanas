@@ -1,18 +1,12 @@
-* {
-	font-family: 'Courier';
-	text-decoration: none;
-	margin: 0px;
-	padding: 0px;
-}
-p {
-	color: white;
-}
-
 body {
+	margin: 0px;
 	background: #36393f;
 }
 
-
+* {
+	font-family: 'Courier';
+	color: white;
+}
 
 #header {
 	background: #202225;
@@ -56,9 +50,6 @@ body {
 	border-bottom: #489d3b solid 5px;
 	border-top-right-radius: 50px;
 	border-bottom-right-radius: 50px;
-}
-#internalLinks a {
-	border-bottom: #489d3b solid 5px;
 }
 #header a {
 	text-decoration: none;
@@ -157,95 +148,76 @@ body {
 #contents {
 	margin: 5px 75px;
 }
+
 #title {
-	background: #43474f;
-	border-radius: 20px;
-	margin: 5px 10px;
-	padding: 10px;
-	border-bottom: #489d3b solid 5px;
-	margin-top: 5px;
-	text-align: center;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: 1;
+	text-align: center;
 }
 #title h1 {
-	font-size: 100px;
-}
-#title h2 {
+	font-size: 75px;
+	margin: 5px;
 }
 
-#index {
+.parent {
+	width: 100%;
+	background: #43474f;
+	border-radius: 20px;
 	margin: 5px 10px;
-	padding: 10px;
+}
+#walkthroughVid{
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-rows: auto;
+	grid-template-areas: 
+	'area1 area2';
+}
+#walkthroughVid h2{
+	margin: 10px;
+	text-align: center;
+}
+#walkthroughVid p{
+	margin: 10px;
+}
+#vidDescription1 {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: 1;
+	grid-area: area1;
+	width: auto;
 }
-#index h2 {
-	font-size: 50px;
-	margin: 5px auto;
+#walkthroughVid iframe{
+	grid-area: area2;
+	margin: 10px;
+	justify-self: flex-end;
 }
-#index a {
-	margin: 5px auto;
-}
-#what1 {
-	position: relative;
-	height: 75px;
-}
-#what {
-	background: #43474f;
-	border-radius: 20px;
-	margin: 5px 10px;
-	padding: 10px;
-	border-bottom: #489d3b solid 5px;
+
+
+#devlogVid{
 	display: grid;
 	grid-template-columns: auto auto;
-	grid-template-rows: auto auto;
+	grid-template-rows: auto;
 	grid-template-areas: 
-	'area1 area2'
-	'area3 area2';
+	'area1 area2';
 }
-#what a {
-grid-area: area1;
-margin: 5px auto;
+#devlogVid h2{
+	margin: 10px;
+	text-align: center;
 }
-#what p {
-grid-area: area3;
-margin: 5px auto;
-text-align: center;
-width: 500px;
+#devlogVid p{
+	margin: 10px;
 }
-#what img {
-grid-area: area2;
-width: 200px;
-height: 200px;
+#vidDescription2 {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: 1;
+	grid-area: area2;
 }
-
-#howTo {
-	background: #43474f;
-	border-radius: 20px;
-	margin: 5px 10px;
-	padding: 10px;
-	border-bottom: #489d3b solid 5px;
+#devlogVid iframe{
+	grid-area: area1;
+	margin: 10px;
 }
-
-#where {
-	background: #43474f;
-	border-radius: 20px;
-	margin: 5px 10px;
-	padding: 10px;
-	border-bottom: #489d3b solid 5px;
-}
-.text {
-	color: white;
-}
-
-.subtitle {
-	color: #489d3b;
-	font-size: 20px;
-}
-
 .spacer {
 	height: 75px;
 	background: transparent;
