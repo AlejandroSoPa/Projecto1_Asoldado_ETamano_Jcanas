@@ -9,12 +9,6 @@ create table USER (
  password varchar(20)
  );
  
- create table ROUND (
- id_round int,
- date datetime,
- time datetime
- );
- 
  create table CHARACTERS (
  id_character int,
  name varchar(20),
@@ -27,13 +21,35 @@ create table USER (
  description varchar(150)
  );
  
+ create table CHARACTER_ADVENTURE (
+ id_character int,
+ id_adventure int
+ );
+ 
  create table STEP (
  id_step int,
  description varchar(150),
- adventure_end bit(1));
+ adventure_end bit(1),
+ id_adventure int
+ );
  
  create table OPTIONS (
  id_option int,
  description varchar(150),
- answer varchar(50)
+ answer varchar(50),
+ id_step int
+ );
+
+ create table ROUND (
+ id_round int,
+ date datetime,
+ time datetime,
+ id_user int,
+ id_characters int,
+ id_adventure int
+ );
+ 
+ create table ROUND_OPTIONS (
+ id_round int,
+ id_options int
  );
