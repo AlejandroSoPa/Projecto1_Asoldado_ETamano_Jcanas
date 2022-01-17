@@ -1,20 +1,59 @@
 import pymysql
 
-db = pymysql.connect(host="23.97.149.43", user="etamano", password="Password1!", db="Projecte")
-cursor = db.cursor()
+conn = pymysql.connect(host="20.71.198.174", user="etamano", password="Etamano1!", db="PROJECT_1")
+db = conn.cursor()
 
 
-def get_answers_bystep_adventure():
-    query = "SELECT * from answers_bystep_adventure"
-    cursor.execute(query)
+def get_Adventures_with_Characters():
+    query = "SELECT a.id_adventure, a.name, a.description, c.id_character from ADVENTURE a inner join CHARACTER_ADVENTURE c on a.id_adventure = c.id_adventure"
+    db.execute(query)
+    data = db.fetchall()
+    dict = {}
+    for i in range(len(data[0])):
+        if data[0][i] not in dict.keys():
+            dict[data[0][i]] = {"Name": data[1][i], "Description": data[2][i]}
+            aux=[]
+            for j in range(len(data[0])):
+                if data[0][j] == data[0][i]:
+                    aux.append(data[3][j])
+            dict[data[0][i]]["Characters"] = aux
 
-    for i in query:
-        for j in query:
-            if i[0] == "idAnswers_byStep_Adventure":
+
+
+
+def getCharacters():
+    query = "SELECT id_character, name from CHARACTERS"
+    db.execute(query)
+    data = db.fetchall()
+    print(data)
+    dictCharacters = {}
+    for i in range(len(data[0])):
+        dictCharacters[data[0][i]] = data[1][i]
+    return dictCharacters
+
+
+def getIdGames():
+    query = "SELECT id_round from ROUND"
+    db.execute(query)
+    data = db.fetchall()
+    aux = []
+    for i in data:
+        aux.append(i)
+    return tuple(aux)
+
+
+
+
+def getUsers():
+    query = "SELECT "
+
+
+
 def checkUserbbdd(user, password):
-    cursor.execute("SELECT * from employees")
-    listusuaris = cursor.fetchall()
-    for i in listusuaris:
+    query = "SELECT username, password from USER"
+    db.execute(query)
+    usuaris = db.fetchall()
+    for i in usuaris:
         if i[0] == user and i[1] == password:
             return 1
         elif i[0] == user and i[1] != password:
@@ -22,11 +61,20 @@ def checkUserbbdd(user, password):
     return 0
 
 
+def getTable(query):
+    db.execute(query)
+    colname = db.description
+    list = []
+    for i in range(data[0]):
+        list.append([])
+        for j in data:
+            print()
+
 def InsertUser(id, user, password):
     print()
 
-# Funcions aux
 
+# Funcions Auxiliars
 
 def auxFuncGetBlankSpace(text):
     if text[len(text)-1] != " ":
@@ -49,14 +97,19 @@ def formatText(text, lenLine, split="\n"):
     aux = []
     auxFormatText(str(text), aux, lenLine)
     string = ""
-    for i in aux:
-        if aux != aux[len(aux)-1]:
-            string += i + str(split)
-        else:
-            string += i
+    if len(str(text)) < lenLine:
+        return text
+    else:
+        for i in aux:
+            if aux != aux[len(aux)-1]:
+                string += i + str(split)
+            else:
+                string += i
+        return string
+
 
 def getHeader(text):
-    return (text.center(50,"="))
+    return (text.center(100,"="))
 
 
 
@@ -87,22 +140,26 @@ print(getFormatedBodyColumns(text, size, 2))
 
 
 def getFormatedAdventures(adventures):
-    string = getHeader("Adventures") + "\n" + "Id".ljust(5) + "Adventure".ljust(15) + "Description".ljust(30) + "\n" \
-             + ("*"*50) + "\n"
+    string = getHeader("Adventures") + "\n" + "Id".ljust(10) + "Adventure".ljust(40) + "Description".ljust(50) + "\n" \
+             + ("*"*100) + "\n"
     for i in adventures.keys():
-        string += getFormatedBodyColumns((i, adventures[i]["Name"], adventures[i]["Description"]), (3, 12, 30), 2)
+        string += getFormatedBodyColumns((i, adventures[i]["Name"], adventures[i]["Description"]), (8, 38, 50), 2)
     return string
 
 
-adventures = {1: {"Name": "A", "Description":1, "Characters":[1, 3]}, 2: {"Name": 2, "Description":"a", "Characters":[1, 3]}}
+adventures = {1: {"Name": "A", "Description": "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente", "Characters":[1, 3]}, 2: {"Name": 2, "Description": "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente", "Characters":[1, 3]}}
 print(getFormatedAdventures(adventures))
 
-def getFormatedAnswers(idAnswer, text, lenLine, leftMargin):
-    aux = []
+def getFormatedAnswers(idAnswer, text, lenLine, leftMargin=0):
     if len(text) < lenLine:
-        aux.append(text)
+        return(" "*leftMargin + str(idAnswer) + ") " + text)
     else:
-        print()
+        text = formatText(text, lenLine).split("\n")
+        string = (" "*leftMargin + str(idAnswer) + ") " + text[0])
+        for i in text[1:]:
+            string += "\n" + " "*(leftMargin+len(str(idAnswer) + ") ")) + i
+        return string
+print(getFormatedAnswers(1, "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente", 30))
 
 def getHeaderForTableFromTuples(t_name_columns, t_size_columns, title=""):
     total_size = 0
@@ -127,17 +184,33 @@ def getTableFromDict(tuple_of_keys, weight_of_columns, dict_of_data):
 
 
 def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[]):
-    print(textOpts + "\n" + inputOptText)
-    print(rangeList)
-    print(dictionary)
-    print(exceptions)
-"""
+    print(textOpts)
+    while True:
+        opt = input(inputOptText)
+        if opt in rangeList or opt in dictionary or opt in exceptions:
+            return opt
+        else:
+            print("Option is not valid")
+
 textOpts="\n1)Login\n2)Create user\n3)Show Adventures\n4)Exit"
-inputOptText="\nElige tu opción:"
+inputOptText="\nElige tu opción: "
 lista = [1,2,3,4]
 exceptions = ["w","e",-1]
 opc = getOpt(textOpts,inputOptText,lista,exceptions)
-"""
+
+
+def getFormatedTable(queryTable, title=""):
+    list_sizes = []
+    for i in range(len(queryTable[0])):
+        list_sizes.append(120//len(queryTable[0]))
+    tupla_sizes = tuple(list_sizes)
+    string = getHeaderForTableFromTuples(queryTable[0], tupla_sizes) + "\n"
+    for i in range(1, len(queryTable)):
+        string += getFormatedBodyColumns(queryTable[i], tupla_sizes) + "\n"
+    return string
+
+queryTable = (('ID AVENTURA - NOMBRE', 'ID PASO - DESCRIPCION', 'ID RESPUESTA -DESCRIPCION', 'NUMERO VECES SELECCIONADA'), ('10 - Todos los h├®roesnecesitan su princesa', '101 - Son las 6 de la ma├▒ana, %personaje% est├í profundamentedormido. Le suena la alarma!', '101 - Apaga la alarma porque quiere dormir, han sido d├¡asmuy duros y %personaje% necesita un descanso.', 7), ('10 - Todos los h├®roes necesitan suprincesa', '103 - Nuestro h├®roe %personaje% se viste r├ípidamente y va an direcci├│n alciber, hay mucho jaleo en la calle, tambi├®n mucha polic├¡a.', '108 - Entra en el ciber arevisar si la princesa Wyoming sigue dentro.', 5))
+print(getFormatedTable(queryTable))
 
 def checkPassword(password):
     if len(password) < 8:

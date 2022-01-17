@@ -1,4 +1,4 @@
-
+import datetime
 def auxFuncGetBlankSpace(text):
     if text[len(text)-1] != " ":
         return auxFuncGetBlankSpace(text[:len(text)-1])
@@ -29,6 +29,7 @@ def formatText(text, lenLine, split="\n"):
             else:
                 string += i
         return string
+
 
 def getHeader(text):
     return (text.center(100,"="))
@@ -104,6 +105,11 @@ def getTableFromDict(tuple_of_keys, weight_of_columns, dict_of_data):
         string += "\n"
     return string
 
+dict = {4: {'idUser': 2, 'Username': 'Jordi', 'idAdventure': 1, 'Name': 'Este muerto esta muy vivo', 'idCharacter': 1, 'date': datetime.datetime(2021, 11, 28, 18, 17, 20), 'CharacterName':
+'Beowulf'}, 5: {'idUser': 2, 'Username': 'Jordi', 'idAdventure': 1, 'Name': 'Este muerto esta muy vivo', 'idCharacter': 1, 'CharacterName': 'Beowulf', 'date': datetime.datetime(2021, 11, 26, 13, 28, 36)}}
+tuple_of_keys = ("Username","Name","CharacterName", "date")
+weigth_of_columns = (20, 30, 20, 20)
+print(getTableFromDict(tuple_of_keys, weigth_of_columns, dict))
 
 def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[]):
     print(textOpts)
@@ -122,14 +128,69 @@ opc = getOpt(textOpts,inputOptText,lista,exceptions)
 
 
 def getFormatedTable(queryTable, title=""):
-    string= str(title).center(120, "=") + "\n"
-    for i in range(len(queryTable)):
-        if i == 0:
-            aux = []
-            for j in queryTable[i]:
-                text = formatText(j, 120//len(queryTable[i]) + )
+    list_sizes = []
+    for i in range(len(queryTable[0])):
+        list_sizes.append(120//len(queryTable[0]))
+    tupla_sizes = tuple(list_sizes)
+    string = getHeaderForTableFromTuples(queryTable[0], tupla_sizes) + "\n"
+    for i in range(1, len(queryTable)):
+        string += getFormatedBodyColumns(queryTable[i], tupla_sizes) + "\n"
     return string
 
-
-queryTable = (('ID AVENTURA - NOMBRE', 'ID PASO - DESCRIPCION', 'ID RESPUESTA -DESCRIPCION', 'NUMERO VECES SELECCIONADA'), ('10 - Todos los héroes necesitan su princesa', '101 - Son las 6 de la mañana, %personaje% está profundamente dormido. Le suena la alarma!', '101 - Apaga la alarma porque quiere dormir, han sido días muy duros y %personaje% necesita un descanso.', 7), ('10 - Todos los héroes necesitan su princesa', '103 - Nuestro héroe %personaje% se viste rápidamente y va an dirección al ciber, hay mucho jaleo en la calle, también mucha policía.', '108 - Entra en el ciber a revisar si la princesa Wyoming sigue dentro.', 5))
+queryTable = (('ID AVENTURA - NOMBRE', 'ID PASO - DESCRIPCION', 'ID RESPUESTA -DESCRIPCION', 'NUMERO VECES SELECCIONADA'), ('10 - Todos los h├®roesnecesitan su princesa', '101 - Son las 6 de la ma├▒ana, %personaje% est├í profundamentedormido. Le suena la alarma!', '101 - Apaga la alarma porque quiere dormir, han sido d├¡asmuy duros y %personaje% necesita un descanso.', 7), ('10 - Todos los h├®roes necesitan suprincesa', '103 - Nuestro h├®roe %personaje% se viste r├ípidamente y va an direcci├│n alciber, hay mucho jaleo en la calle, tambi├®n mucha polic├¡a.', '108 - Entra en el ciber arevisar si la princesa Wyoming sigue dentro.', 5))
 print(getFormatedTable(queryTable))
+
+def checkPassword(password):
+    if len(password) < 8:
+        print("Password is too short")
+        return False
+    else:
+        blank = False
+        ucase = False
+        lcase = False
+        num = False
+        special = False
+        for i in password:
+            if i == " ":
+                blank = True
+                break
+            elif i.islower():
+                lcase = True
+            elif i.isupper():
+                ucase = True
+            elif i.isdigit():
+                num = True
+            elif i.isalnum() == False:
+                special = True
+
+        if blank == True:
+            print("Password cannot contain blank spaces")
+            return False
+        elif lcase == False:
+            print("Password must contain at least one lowercase letter")
+            return False
+        elif ucase == False:
+            print("Password must contain at least one uppercase letter")
+            return False
+        elif num == False:
+            print("Password must contain at least one number")
+            return False
+        elif special == False:
+            print("Password must contain at least one special character")
+            return False
+        else:
+            return True
+
+
+def checkUser(user):
+    if len(user) < 6:
+        print("Password is too short")
+        return False
+    elif len(user) > 10:
+        print("Password is too long")
+        return False
+    elif user.isalnum() == False:
+        print("Password cannot contain special characters")
+        return False
+    else:
+        return True

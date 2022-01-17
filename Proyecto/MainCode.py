@@ -1,12 +1,4 @@
-from funcions import *
-import mysql.connector
-
-db = mysql.connector.connect(
-    host="localhost",
-    user="ErikTamaño",
-    password="admin123",
-    database="hr"
-)
+from Funcions import *
 
 flag_0 = True
 #Username 6 y 10 caracteres
@@ -20,6 +12,17 @@ while flag_0:
           "*" + " \_____|_| |_|\___/ \___/|___/\___|    |_|\___/ \__,_|_|    |_____/ \__\___/|_|   \__, |".center(98) + "*" + "\n" +
           "*" + "                                                                                   __/ |".center(98) + "*" + "\n" +
           "*" + "                                                                                  |___/ ".center(98) + "*" + "\n" +
+          "*" + " "*98 + "*" + "\n" +
+          "*" + "=" * 98 + "*" + "\n" +
+          "*" + " " * 98 + "*" + "\n" +
+          "*" + "              _   _                               ".center(98) + "*" + "\n" +
+          "*" + "             | | | |                              ".center(98) + "*" + "\n" +
+          "*" + "   __ _  __ _| |_| |_ ___    _ __   ___ _ __ ___  ".center(98) + "*" + "\n" +
+          "*" + "  / _` |/ _` | __| __/ _ \  | '_ \ / _ \ '__/ _ \ ".center(98) + "*" + "\n" +
+          "*" + " | (_| | (_| | |_| || (_) | | | | |  __/ | | (_) |".center(98) + "*" + "\n" +
+          "*" + "  \__, |\__,_|\__|\__\___/  |_| |_|\___|_|  \___/ ".center(98) + "*" + "\n" +
+          "*" + "   __/ |                                          ".center(98) + "*" + "\n" +
+          "*" + "  |___/                                           ".center(98) + "*" + "\n" +
           "*"*100
           + "\n\n"
           + " "*45 + "1) Login" + "\n"
@@ -52,11 +55,3 @@ while flag_0:
                 print("Username cannot contain special characters")
             else:
                 break
-
-
-
-        if checkUserbbdd(username, password) != 0:
-            print("User already exists")
-        else:
-            InsertUser(0, username, password)
-            print("User created")
