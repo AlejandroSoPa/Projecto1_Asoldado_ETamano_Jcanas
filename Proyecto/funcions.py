@@ -1,3 +1,80 @@
+import pymysql
+
+conn = pymysql.connect(host="20.71.198.174", user="etamano", password="Etamano1!", db="PROJECT_1")
+db = conn.cursor()
+
+
+def get_Adventures_with_Characters():
+    query = "SELECT a.id_adventure, a.name, a.description, c.id_character from ADVENTURE a inner join CHARACTER_ADVENTURE c on a.id_adventure = c.id_adventure"
+    db.execute(query)
+    data = db.fetchall()
+    dict = {}
+    for i in range(len(data[0])):
+        if data[0][i] not in dict.keys():
+            dict[data[0][i]] = {"Name": data[1][i], "Description": data[2][i]}
+            aux=[]
+            for j in range(len(data[0])):
+                if data[0][j] == data[0][i]:
+                    aux.append(data[3][j])
+            dict[data[0][i]]["Characters"] = aux
+
+
+
+
+def getCharacters():
+    query = "SELECT id_character, name from CHARACTERS"
+    db.execute(query)
+    data = db.fetchall()
+    print(data)
+    dictCharacters = {}
+    for i in range(len(data[0])):
+        dictCharacters[data[0][i]] = data[1][i]
+    return dictCharacters
+
+
+def getIdGames():
+    query = "SELECT id_round from ROUND"
+    db.execute(query)
+    data = db.fetchall()
+    aux = []
+    for i in data:
+        aux.append(i)
+    return tuple(aux)
+
+
+
+
+def getUsers():
+    query = "SELECT "
+
+
+
+def checkUserbbdd(user, password):
+    query = "SELECT username, password from USER"
+    db.execute(query)
+    usuaris = db.fetchall()
+    for i in usuaris:
+        if i[0] == user and i[1] == password:
+            return 1
+        elif i[0] == user and i[1] != password:
+            return -1
+    return 0
+
+
+def getTable(query):
+    db.execute(query)
+    colname = db.description
+    list = []
+    for i in range(data[0]):
+        list.append([])
+        for j in data:
+            print()
+
+def InsertUser(id, user, password):
+    print()
+
+
+# Funcions Auxiliars
 
 def auxFuncGetBlankSpace(text):
     if text[len(text)-1] != " ":
@@ -20,15 +97,12 @@ def formatText(text, lenLine, split="\n"):
     aux = []
     auxFormatText(str(text), aux, lenLine)
     string = ""
-    if len(str(text)) < lenLine:
-        return text
-    else:
-        for i in aux:
-            if aux != aux[len(aux)-1]:
-                string += i + str(split)
-            else:
-                string += i
-        return string
+    for i in aux:
+        if aux != aux[len(aux)-1]:
+            string += i + str(split)
+        else:
+            string += i
+    return string
 
 def getHeader(text):
     return (text.center(100,"="))
@@ -123,13 +197,74 @@ opc = getOpt(textOpts,inputOptText,lista,exceptions)
 
 def getFormatedTable(queryTable, title=""):
     string= str(title).center(120, "=") + "\n"
+    list_sizes = []
+    list_sizes.append(len(queryTable[0]))
     for i in range(len(queryTable)):
         if i == 0:
-            aux = []
+            getFormatedBodyColumns(queryTable[i])
+            string += "\n" + "*"*120
+        else:
             for j in queryTable[i]:
-                text = formatText(j, 120//len(queryTable[i]) + )
+                string += str(formatText(j, 120//len(queryTable[i]))).ljust(120//len(queryTable[i]))
+            string += "\n"
     return string
 
-
-queryTable = (('ID AVENTURA - NOMBRE', 'ID PASO - DESCRIPCION', 'ID RESPUESTA -DESCRIPCION', 'NUMERO VECES SELECCIONADA'), ('10 - Todos los héroes necesitan su princesa', '101 - Son las 6 de la mañana, %personaje% está profundamente dormido. Le suena la alarma!', '101 - Apaga la alarma porque quiere dormir, han sido días muy duros y %personaje% necesita un descanso.', 7), ('10 - Todos los héroes necesitan su princesa', '103 - Nuestro héroe %personaje% se viste rápidamente y va an dirección al ciber, hay mucho jaleo en la calle, también mucha policía.', '108 - Entra en el ciber a revisar si la princesa Wyoming sigue dentro.', 5))
+queryTable = (('ID AVENTURA - NOMBRE', 'ID PASO - DESCRIPCION', 'ID RESPUESTA -DESCRIPCION', 'NUMERO VECES SELECCIONADA'), ('10 - Todos los h├®roesnecesitan su princesa', '101 - Son las 6 de la ma├▒ana, %personaje% est├í profundamentedormido. Le suena la alarma!', '101 - Apaga la alarma porque quiere dormir, han sido d├¡asmuy duros y %personaje% necesita un descanso.', 7), ('10 - Todos los h├®roes necesitan suprincesa', '103 - Nuestro h├®roe %personaje% se viste r├ípidamente y va an direcci├│n alciber, hay mucho jaleo en la calle, tambi├®n mucha polic├¡a.', '108 - Entra en el ciber arevisar si la princesa Wyoming sigue dentro.', 5))
 print(getFormatedTable(queryTable))
+
+def checkPassword(password):
+    if len(password) < 8:
+        print("Password is too short")
+        return False
+    else:
+        blank = False
+        ucase = False
+        lcase = False
+        num = False
+        special = False
+        for i in password:
+            if i == " ":
+                blank = True
+                break
+            elif i.islower():
+                lcase = True
+            elif i.isupper():
+                ucase = True
+            elif i.isdigit():
+                num = True
+            elif i.isalnum() == False:
+                special = True
+
+        if blank == True:
+            print("Password cannot contain blank spaces")
+            return False
+        elif lcase == False:
+            print("Password must contain at least one lowercase letter")
+            return False
+        elif ucase == False:
+            print("Password must contain at least one uppercase letter")
+            return False
+        elif num == False:
+            print("Password must contain at least one number")
+            return False
+        elif special == False:
+            print("Password must contain at least one special character")
+            return False
+        else:
+            return True
+
+
+def checkUser(user):
+    if len(user) < 6:
+        print("Password is too short")
+        return False
+    elif len(user) > 10:
+        print("Password is too long")
+        return False
+    elif user.isalnum() == False:
+        print("Password cannot contain special characters")
+        return False
+    else:
+        return True
+
+
