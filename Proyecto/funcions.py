@@ -1,7 +1,34 @@
+import datetime
 import pymysql
 
-conn = pymysql.connect(host="20.71.198.174", user="etamano", password="Etamano1!", db="PROJECT_1")
+conn = pymysql.connect(host="20.105.176.24", user="etamano", password="Etamano1!", db="PROJECT_1")
 db = conn.cursor()
+
+
+def get_answers_bystep_adventure(id_adventure):
+    query = "SELECT id_option, id_STEP, description, answer, next_step from ADVENTURE where id_adventure = " + id_adventure
+    db.execute(query)
+    data = db.fetchall()
+    dict = {}
+    for i in data:
+        dict[(i[0], i[1])] = {"Description": i[2], "Resolution_answer": i[3], "Next_Step_Adventure": i[4]}
+    return dict
+
+def get_id_bystep_adventure(id_adventure):
+    query = "SELECT s.id_step, s.description, s.adventure_end, o.id_option from ADVENTURE a inner join STEP s on " \
+            "a.id_adventure = s.ID_ADVENTURE inner join OPTION o on o.ID_STEP = s.id_step where a.adventure_id = " + str(id_adventure)
+    db.execute(query)
+    data = db.fetchall()
+    dict = {}
+    for i in data:
+        if i[0] not in dict.keys():
+            dict[i[0]] = {"Description": i[1], "Final_Step": i[2]}
+            aux = []
+            for j in data:
+                if j[0] == i[0]:
+                    aux.append(j[3])
+            dict[i[0]]["answers_in_step"] = tuple(aux)
+    return dict
 
 
 def get_Adventures_with_Characters():
@@ -9,31 +36,37 @@ def get_Adventures_with_Characters():
     db.execute(query)
     data = db.fetchall()
     dict = {}
-    for i in range(len(data[0])):
-        if data[0][i] not in dict.keys():
-            dict[data[0][i]] = {"Name": data[1][i], "Description": data[2][i]}
+    for i in data:
+        if i[0] not in dict.keys():
+            dict[i[0]] = {"Name": i[1], "Description": i[2]}
             aux=[]
-            for j in range(len(data[0])):
-                if data[0][j] == data[0][i]:
-                    aux.append(data[3][j])
-            dict[data[0][i]]["Characters"] = aux
+            for j in data:
+                if j[0] == i[0]:
+                    aux.append(j[3])
+            dict[i[0]]["Characters"] = aux
+    return dict
 
 
 
 
 def getCharacters():
-    query = "SELECT id_character, name from CHARACTERS"
+    query = "SELECT id_character, name from PROJECT_1.CHARACTER"
     db.execute(query)
     data = db.fetchall()
     print(data)
     dictCharacters = {}
-    for i in range(len(data[0])):
-        dictCharacters[data[0][i]] = data[1][i]
+    for i in range(len(data)):
+        dictCharacters[data[i][0]] = data[i][1]
     return dictCharacters
 
 
+def getChoices(id_adventure):
+    return (get_id_bystep_adventure(id_adventure), get_answers_bystep_adventure(id_adventure))
+
+
+
 def getIdGames():
-    query = "SELECT id_round from ROUND"
+    query = "SELECT id_round from ROUND order by id_round desc"
     db.execute(query)
     data = db.fetchall()
     aux = []
@@ -42,11 +75,48 @@ def getIdGames():
     return tuple(aux)
 
 
+def insertCurrentGame(idGame, idUser, idChar, idAdventure):
+    query = "INSERT INTO ROUND (id_round, ID_USER, ID_CHARACTER, ID_ADVENTURE, date, time, usercreate) VALUES (" + \
+            str(idGame) + ", " + str(idUser) + ", " + str(idChar) + ", " + str(idAdventure) + ", " + str(datetime.date) + ", " + str(datetime.time) + ", etamano)"
+    db.execute(query)
 
 
 def getUsers():
-    query = "SELECT "
+    query = "SELECT id_user, username, password from USER"
+    db.execute(query)
+    data = db.fetchall()
+    print(data)
+    aux = {}
+    for i in range(len(data)):
+        aux[data[i][1]] = {"password": data[i][2], "idUser": data[i][0]}
+    return aux
 
+
+def getUserIds():
+    dict = getUsers()
+    listUsers = list(dict.keys())
+    listIds = []
+    for i in dict:
+        listIds.append(dict[i]["idUser"])
+    return [listUsers, listIds]
+
+
+def insertUser():
+    print()
+
+
+def getTable(query):
+    db.execute(query)
+    colname = db.description
+    data = db.fetchall()
+    list = []
+    aux = []
+    for i in colname:
+        aux.append(i[0])
+    list.append(tuple(aux))
+    for i in data:
+        list.append(i)
+    return tuple(list)
 
 
 def checkUserbbdd(user, password):
@@ -61,20 +131,13 @@ def checkUserbbdd(user, password):
     return 0
 
 
-def getTable(query):
-    db.execute(query)
-    colname = db.description
-    list = []
-    for i in range(data[0]):
-        list.append([])
-        for j in data:
-            print()
-
-def InsertUser(id, user, password):
-    print()
-
 
 # Funcions Auxiliars
+
+
+def setIdGame():
+    tupla = getIdGames()
+    return tupla[0] + 1
 
 def auxFuncGetBlankSpace(text):
     if text[len(text)-1] != " ":
@@ -97,15 +160,19 @@ def formatText(text, lenLine, split="\n"):
     aux = []
     auxFormatText(str(text), aux, lenLine)
     string = ""
-    for i in aux:
-        if aux != aux[len(aux)-1]:
-            string += i + str(split)
-        else:
-            string += i
-    return string
+    if len(str(text)) < lenLine:
+        return text
+    else:
+        for i in aux:
+            if aux != aux[len(aux)-1]:
+                string += i + str(split)
+            else:
+                string += i
+        return string
+
 
 def getHeader(text):
-    return (text.center(100,"="))
+    return ("*"*100 + "\n" + text.center(100,"=") + "\n" + "*"*100)
 
 
 
@@ -128,23 +195,15 @@ def getFormatedBodyColumns(tupla_texts, tupla_sizes, margins = 0):
         string += "\n"
     return string
 
-text = ("Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente",
-        "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente",
-        "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente")
-size = (20, 30, 50)
-print(getFormatedBodyColumns(text, size, 2))
 
 
 def getFormatedAdventures(adventures):
-    string = getHeader("Adventures") + "\n" + "Id".ljust(10) + "Adventure".ljust(40) + "Description".ljust(50) + "\n" \
-             + ("*"*100) + "\n"
+    string = ("Adventures").center(100, "=") + "\n" + "Id".ljust(10) + "Adventure".ljust(40) + "Description".ljust(50) \
+             + "\n" + ("*"*100) + "\n"
     for i in adventures.keys():
         string += getFormatedBodyColumns((i, adventures[i]["Name"], adventures[i]["Description"]), (8, 38, 50), 2)
     return string
 
-
-adventures = {1: {"Name": "A", "Description": "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente", "Characters":[1, 3]}, 2: {"Name": 2, "Description": "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente", "Characters":[1, 3]}}
-print(getFormatedAdventures(adventures))
 
 def getFormatedAnswers(idAnswer, text, lenLine, leftMargin=0):
     if len(text) < lenLine:
@@ -155,7 +214,7 @@ def getFormatedAnswers(idAnswer, text, lenLine, leftMargin=0):
         for i in text[1:]:
             string += "\n" + " "*(leftMargin+len(str(idAnswer) + ") ")) + i
         return string
-print(getFormatedAnswers(1, "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente", 30))
+
 
 def getHeaderForTableFromTuples(t_name_columns, t_size_columns, title=""):
     total_size = 0
@@ -183,34 +242,25 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
     print(textOpts)
     while True:
         opt = input(inputOptText)
+        if opt.isdigit():
+            opt = int(opt)
         if opt in rangeList or opt in dictionary or opt in exceptions:
             return opt
         else:
             print("Option is not valid")
 
-textOpts="\n1)Login\n2)Create user\n3)Show Adventures\n4)Exit"
-inputOptText="\nElige tu opción: "
-lista = [1,2,3,4]
-exceptions = ["w","e",-1]
-opc = getOpt(textOpts,inputOptText,lista,exceptions)
 
 
 def getFormatedTable(queryTable, title=""):
-    string= str(title).center(120, "=") + "\n"
     list_sizes = []
-    list_sizes.append(len(queryTable[0]))
-    for i in range(len(queryTable)):
-        if i == 0:
-            getFormatedBodyColumns(queryTable[i])
-            string += "\n" + "*"*120
-        else:
-            for j in queryTable[i]:
-                string += str(formatText(j, 120//len(queryTable[i]))).ljust(120//len(queryTable[i]))
-            string += "\n"
+    for i in range(len(queryTable[0])):
+        list_sizes.append(120//len(queryTable[0]))
+    tupla_sizes = tuple(list_sizes)
+    string = getHeaderForTableFromTuples(queryTable[0], tupla_sizes) + "\n"
+    for i in range(1, len(queryTable)):
+        string += getFormatedBodyColumns(queryTable[i], tupla_sizes) + "\n"
     return string
 
-queryTable = (('ID AVENTURA - NOMBRE', 'ID PASO - DESCRIPCION', 'ID RESPUESTA -DESCRIPCION', 'NUMERO VECES SELECCIONADA'), ('10 - Todos los h├®roesnecesitan su princesa', '101 - Son las 6 de la ma├▒ana, %personaje% est├í profundamentedormido. Le suena la alarma!', '101 - Apaga la alarma porque quiere dormir, han sido d├¡asmuy duros y %personaje% necesita un descanso.', 7), ('10 - Todos los h├®roes necesitan suprincesa', '103 - Nuestro h├®roe %personaje% se viste r├ípidamente y va an direcci├│n alciber, hay mucho jaleo en la calle, tambi├®n mucha polic├¡a.', '108 - Entra en el ciber arevisar si la princesa Wyoming sigue dentro.', 5))
-print(getFormatedTable(queryTable))
 
 def checkPassword(password):
     if len(password) < 8:
@@ -268,3 +318,54 @@ def checkUser(user):
         return True
 
 
+def UserExists(user):
+    check = checkUserbbdd(user)
+    if check == 0:
+        return False
+    else:
+        return True
+
+
+# Altres funcions que no apareixen al document informatiu
+
+
+def title_screen():
+    return ("\n" + "*"*100 + "\n" +
+          "*" + "  _____ _                           __     __                 _____ _                   ".center(98) + "*" + "\n" +
+          "*" + " / ____| |                          \ \   / /                / ____| |                  ".center(98) + "*" +"\n" +
+          "*" + "| |    | |__   ___   ___  ___  ___   \ \_/ /__  _   _ _ __  | (___ | |_ ___  _ __ _   _ ".center(98) + "*" + "\n" +
+          "*" + "| |    | '_ \ / _ \ / _ \/ __|/ _ \   \   / _ \| | | | '__|  \___ \| __/ _ \| '__| | | |".center(98) + "*" + "\n" +
+          "*" + "| |____| | | | (_) | (_) \__ \  __/    | | (_) | |_| | |     ____) | || (_) | |  | |_| |".center(98) + "*" + "\n" +
+          "*" + " \_____|_| |_|\___/ \___/|___/\___|    |_|\___/ \__,_|_|    |_____/ \__\___/|_|   \__, |".center(98) + "*" + "\n" +
+          "*" + "                                                                                   __/ |".center(98) + "*" + "\n" +
+          "*" + "                                                                                  |___/ ".center(98) + "*" + "\n" +
+          "*" + " "*98 + "*" + "\n" +
+          "*" + "=" * 98 + "*" + "\n" +
+          "*" + " " * 98 + "*" + "\n" +
+          "*" + "              _   _                               ".center(98) + "*" + "\n" +
+          "*" + "             | | | |                              ".center(98) + "*" + "\n" +
+          "*" + "   __ _  __ _| |_| |_ ___    _ __   ___ _ __ ___  ".center(98) + "*" + "\n" +
+          "*" + "  / _` |/ _` | __| __/ _ \  | '_ \ / _ \ '__/ _ \ ".center(98) + "*" + "\n" +
+          "*" + " | (_| | (_| | |_| || (_) | | | | |  __/ | | (_) |".center(98) + "*" + "\n" +
+          "*" + "  \__, |\__,_|\__|\__\___/  |_| |_|\___|_|  \___/ ".center(98) + "*" + "\n" +
+          "*" + "   __/ |                                          ".center(98) + "*" + "\n" +
+          "*" + "  |___/                                           ".center(98) + "*" + "\n" +
+          "*"*100 + "\n")
+
+
+def estrellas():
+    return ("\n\n" +
+            "__/\____/\____/\____/\____/\____/\____/\____/\____/\____/\____/\____/\__" +
+            "\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /" +
+            "/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\ " +
+            "  \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/  " + "\n\n")
+
+
+def reports_dibujo():
+    return (estrellas() +
+            " ____                        _" +
+            "|  _ \ ___  _ __   ___  _ __| |__ __" +
+            "| |_) / _ \| '_ \ / _ \| '__| __/ __|" +
+            "|  _ <  __/| |_) | (_) | |  | |_\__ \ " +
+            "|_| \_\___|| .__/ \___/|_|   \__|___/" +
+            "           |_|" + estrellas())
