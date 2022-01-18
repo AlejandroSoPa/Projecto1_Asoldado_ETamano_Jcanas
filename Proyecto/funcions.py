@@ -31,6 +31,13 @@ def get_id_bystep_adventure(id_adventure):
     return dict
 
 
+def get_first_step_adventure(id_adventure):
+    query = "SELECT min(id_step) from STEP"
+    db.execute(query)
+    data = db.fetchall()
+    return data[0][0]
+
+
 def get_Adventures_with_Characters():
     query = "SELECT a.id_adventure, a.name, a.description, c.id_character from ADVENTURE a inner join CHARACTER_ADVENTURE c on a.id_adventure = c.id_adventure"
     db.execute(query)
@@ -47,8 +54,6 @@ def get_Adventures_with_Characters():
     return dict
 
 
-
-
 def getCharacters():
     query = "SELECT id_character, name from PROJECT_1.CHARACTER"
     db.execute(query)
@@ -58,6 +63,19 @@ def getCharacters():
     for i in range(len(data)):
         dictCharacters[data[i][0]] = data[i][1]
     return dictCharacters
+
+
+def getReplayAdventures():
+    query = "SELECT r.id_round, u.id_user, u.username, a.id_adventure, a.name, r.date, c.id_character, c.name from " \
+            "ROUND r inner join USER u on u.id_user = r.ID_USER inner join ADVENTURE a on a.id_adventure = " \
+            "r.ID_ADVENTURE inner join PROJECT_1.CHARACTER c on c.id_character = r.ID_CHARACTER order by r.date desc"
+    db.execute(query)
+    data = db.execute(query)
+    dict = {}
+    for i in data:
+        dict[i[0]] = {"idUser": i[1], "Username": i[2], "idAdventure": i[3], "Name": i[4], "date": i[5], "idCharacter": i[6], "CharacterName": i[7]}
+    return dict
+
 
 
 def getChoices(id_adventure):
@@ -369,3 +387,31 @@ def reports_dibujo():
             "|  _ <  __/| |_) | (_) | |  | |_\__ \ " +
             "|_| \_\___|| .__/ \___/|_|   \__|___/" +
             "           |_|" + estrellas())
+
+
+def replay():
+    return (estrellas()+ "\n" +
+            " _____      _              __     __               ".center(100) + "\n" +
+            "|  __ \    | (_)           \ \   / /               ".center(100) + "\n" +
+            "| |__) |___| |___   _____   \ \_/ /__  _   _ _ __  ".center(100) + "\n" +
+            "|  _  // _ \ | \ \ / / _ \   \   / _ \| | | | '__| ".center(100) + "\n" +
+            "| | \ \  __/ | |\ V /  __/    | | (_) | |_| | |    ".center(100) + "\n" +
+            "|_|  \_\___|_|_| \_/ \___|    |_|\___/ \__,_|_|    ".center(100) + "\n" +
+            "             _                 _                   ".center(100) + "\n" +
+            "    /\      | |               | |                  ".center(100) + "\n" +
+            "   /  \   __| |_   _____ _ __ | |_ _   _ _ __ ___  ".center(100) + "\n" +
+            "  / /\ \ / _` \ \ / / _ \ '_ \| __| | | | '__/ _ \ ".center(100) + "\n" +
+            " / ____ \ (_| |\ V /  __/ | | | |_| |_| | | |  __/ ".center(100) + "\n" +
+            "/_/    \_\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___| ".center(100) + "\n" +
+            estrellas())
+
+def fin():
+    return ((32*" " + "_____ ___ _   _").center(100) +
+            "__/\____/\____/\____/\____/\__ |  ___|_ _| \ | | __/\____/\____/\____/\____/\__".center(100) + "\n" +
+            "\    /\    /\    /\    /\    / | |_   | ||  \| | \    /\    /\    /\    /\    /".center(100) + "\n" +
+            "/_  _\/_  _\/_  _\/_  _\/_  _\ |  _|  | || |\  | /_  _\/_  _\/_  _\/_  _\/_  _\ ".center(100) + "\n" +
+            "  \/    \/    \/    \/    \/   |_|   |___|_| \_|   \/    \/    \/    \/    \/   ".center(100))
+
+
+def wait():
+    wait = input("Press ENTER to continue: ")
