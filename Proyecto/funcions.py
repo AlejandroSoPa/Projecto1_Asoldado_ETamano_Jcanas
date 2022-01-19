@@ -6,7 +6,9 @@ db = conn.cursor()
 
 
 def get_answers_bystep_adventure(id_adventure):
-    query = "SELECT id_option, id_STEP, description, answer, next_step from ADVENTURE where id_adventure = " + id_adventure
+    query = "SELECT o.ID_OPTION, s.ID_STEP, o.description, o.answer, o.next_step from ADVENTURE a inner join STEP s on " \
+            "s.ID_ADVENTURE = a.ID_ADVENTURE inner join PROJECT_1.OPTION o on o.ID_STEP = s.ID_STEP where a.ID_ADVENTURE = " \
+            + str(id_adventure)
     db.execute(query)
     data = db.fetchall()
     dict = {}
@@ -15,8 +17,8 @@ def get_answers_bystep_adventure(id_adventure):
     return dict
 
 def get_id_bystep_adventure(id_adventure):
-    query = "SELECT s.id_step, s.description, s.adventure_end, o.id_option from ADVENTURE a inner join STEP s on " \
-            "a.id_adventure = s.ID_ADVENTURE inner join OPTION o on o.ID_STEP = s.id_step where a.adventure_id = " + str(id_adventure)
+    query = "SELECT s.ID_STEP, s.description, s.adventure_end, o.ID_OPTION from ADVENTURE a inner join STEP s on " \
+            "a.ID_ADVENTURE = s.ID_ADVENTURE inner join PROJECT_1.OPTION o on o.ID_STEP = s.ID_STEP where a.ID_ADVENTURE = " + str(id_adventure)
     db.execute(query)
     data = db.fetchall()
     dict = {}
@@ -32,14 +34,15 @@ def get_id_bystep_adventure(id_adventure):
 
 
 def get_first_step_adventure(id_adventure):
-    query = "SELECT min(id_step) from STEP"
+    query = "SELECT min(ID_STEP) from STEP where ID_ADVENTURE = " + str(id_adventure)
     db.execute(query)
     data = db.fetchall()
     return data[0][0]
 
 
 def get_Adventures_with_Characters():
-    query = "SELECT a.id_adventure, a.name, a.description, c.id_character from ADVENTURE a inner join CHARACTER_ADVENTURE c on a.id_adventure = c.id_adventure"
+    query = "SELECT a.ID_ADVENTURE, a.name, a.description, c.ID_CHARACTER from ADVENTURE a inner join " \
+            "CHARACTER_ADVENTURE c on a.ID_ADVENTURE = c.ID_ADVENTURE"
     db.execute(query)
     data = db.fetchall()
     dict = {}
@@ -55,10 +58,9 @@ def get_Adventures_with_Characters():
 
 
 def getCharacters():
-    query = "SELECT id_character, name from PROJECT_1.CHARACTER"
+    query = "SELECT ID_CHARACTER, name from PROJECT_1.CHARACTER"
     db.execute(query)
     data = db.fetchall()
-    print(data)
     dictCharacters = {}
     for i in range(len(data)):
         dictCharacters[data[i][0]] = data[i][1]
@@ -66,11 +68,12 @@ def getCharacters():
 
 
 def getReplayAdventures():
-    query = "SELECT r.id_round, u.id_user, u.username, a.id_adventure, a.name, r.date, c.id_character, c.name from " \
-            "ROUND r inner join USER u on u.id_user = r.ID_USER inner join ADVENTURE a on a.id_adventure = " \
-            "r.ID_ADVENTURE inner join PROJECT_1.CHARACTER c on c.id_character = r.ID_CHARACTER order by r.date desc"
+    query = "SELECT r.ID_ROUND, u.ID_USER, u.username, a.ID_ADVENTURE, a.name, concat(r.date, ' ', r.time) as datetime" \
+            ", c.ID_CHARACTER, c.name from ROUND r inner join USER u on u.ID_USER = r.ID_USER inner join ADVENTURE a on " \
+            "a.ID_ADVENTURE = r.ID_ADVENTURE inner join PROJECT_1.CHARACTER c on c.ID_CHARACTER = r.ID_CHARACTER order " \
+            "by r.date desc, r.time desc"
     db.execute(query)
-    data = db.execute(query)
+    data = db.fetchall()
     dict = {}
     for i in data:
         dict[i[0]] = {"idUser": i[1], "Username": i[2], "idAdventure": i[3], "Name": i[4], "date": i[5], "idCharacter": i[6], "CharacterName": i[7]}
@@ -78,13 +81,15 @@ def getReplayAdventures():
 
 
 
-def getChoices(id_adventure):
-    return (get_id_bystep_adventure(id_adventure), get_answers_bystep_adventure(id_adventure))
+def getChoices(id_round):
+    query = "SELECT s.ID_STEP, o.ID_OPTION from ROUND r inner join ROUND_OPTION e on r.ID_ROUND = e.ID_ROUND inner" \
+            "join PROJECT_1.OPTION o on o.ID_OPTION = e.ID_OPTION inner join STEP s on s.ID_STEP = o.ID_STEP where r.ID_ROUND = " \
+            + str(id_round)
 
 
 
 def getIdGames():
-    query = "SELECT id_round from ROUND order by id_round desc"
+    query = "SELECT ID_ROUND from ROUND order by ID_ROUND desc"
     db.execute(query)
     data = db.fetchall()
     aux = []
@@ -93,17 +98,17 @@ def getIdGames():
     return tuple(aux)
 
 
-def insertCurrentGame(idGame, idUser, idChar, idAdventure):
-    query = "INSERT INTO ROUND (id_round, ID_USER, ID_CHARACTER, ID_ADVENTURE, date, time, usercreate) VALUES (" + \
-            str(idGame) + ", " + str(idUser) + ", " + str(idChar) + ", " + str(idAdventure) + ", " + str(datetime.date) + ", " + str(datetime.time) + ", etamano)"
+def insertCurrentGame(idUser, idChar, idAdventure):
+    query = "INSERT INTO ROUND (ID_ROUND, ID_USER, ID_CHARACTER, ID_ADVENTURE, date, time, usercreate, datecreated) VALUES (" + \
+            str(idUser) + ", " + str(idChar) + ", " + str(idAdventure) + ", current_date(), current_time(), current_user(), current_timestamp())"
     db.execute(query)
+
 
 
 def getUsers():
-    query = "SELECT id_user, username, password from USER"
+    query = "SELECT ID_USER, username, password from USER"
     db.execute(query)
     data = db.fetchall()
-    print(data)
     aux = {}
     for i in range(len(data)):
         aux[data[i][1]] = {"password": data[i][2], "idUser": data[i][0]}
@@ -119,8 +124,11 @@ def getUserIds():
     return [listUsers, listIds]
 
 
-def insertUser():
-    print()
+def insertUser(user, password):
+    query = "INSERT INTO USER (username, password, usercreate, datecreated) VALUES ('" + str(user) + "', '" + \
+            str(password) + "', current_user(), current_timestamp())"
+    db.execute(query)
+    db.execute("commit")
 
 
 def getTable(query):
@@ -156,6 +164,13 @@ def checkUserbbdd(user, password):
 def setIdGame():
     tupla = getIdGames()
     return tupla[0] + 1
+
+
+def InsertCurrentChoice(idGame, answer):
+    query = "INSERT INTO ROUND_OPTION (ID_ROUND, ID_OPTION, usercreate, datecreated) VALUES (" + str(idGame) + ", " \
+            + str(answer) + ", current_user(), current_timestamp())"
+    db.execute(query)
+
 
 def auxFuncGetBlankSpace(text):
     if text[len(text)-1] != " ":
@@ -324,24 +339,51 @@ def checkPassword(password):
 
 def checkUser(user):
     if len(user) < 6:
-        print("Password is too short")
+        print("Username is too short")
         return False
     elif len(user) > 10:
-        print("Password is too long")
+        print("Username is too long")
         return False
     elif user.isalnum() == False:
-        print("Password cannot contain special characters")
+        print("Username cannot contain special characters")
         return False
     else:
         return True
 
 
 def UserExists(user):
-    check = checkUserbbdd(user)
+    check = checkUserbbdd(user, " ")
     if check == 0:
         return False
     else:
         return True
+
+
+def replay(choices):
+    query = "SELECT a.name from ADVENTURE a inner join STEP s on s.ID_ADVENTURE = a.ID_ADVENTURE where s.ID_STEP = " + \
+            str(choices[0][0])
+    db.execute(query)
+    data = db.fetchall()
+    title = data[0][0]
+    for i in choices:
+        query = "SELECT description from STEP where ID_STEP = " + str(i[0])
+        db.execute(query)
+        data = db.fetchall()
+        text = data[0][0]
+        print(getHeader(title) + "\n" + formatText(text, 100) + "\n")
+        query = "SELECT ID_OPTION, description from PROJECT1_OPTION where ID_STEP = " + str(i[0])
+        db.execute(query)
+        data = db.fetchall()
+        for j in data:
+            print(getFormatedAnswers(j[0], j[1], 95, 5))
+        print("\n")
+        wait()
+        print("\n" + "Option " + str(i[1]) + " selected.")
+        query = "SELECT answer from PROJECT_1.OPTION where ID_OPTION = " + str(i[1])
+        db.execute(query)
+        data = db.fetchall()
+        answer = data[0][0]
+        print(formatText(answer), 100)
 
 
 # Altres funcions que no apareixen al document informatiu
@@ -373,20 +415,20 @@ def title_screen():
 
 def estrellas():
     return ("\n\n" +
-            "__/\____/\____/\____/\____/\____/\____/\____/\____/\____/\____/\____/\__" +
-            "\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /" +
-            "/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\ " +
-            "  \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/  " + "\n\n")
+            " __/\____/\____/\____/\____/\____/\____/\____/\____/\____/\____/\____/\__ ".center(100) + "\n" +
+            " \    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    / ".center(100) + "\n" +
+            " /_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\/_  _\ ".center(100) + "\n" +
+            "   \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/   ".center(100) + "\n\n")
 
 
 def reports_dibujo():
     return (estrellas() +
-            " ____                        _" +
-            "|  _ \ ___  _ __   ___  _ __| |__ __" +
-            "| |_) / _ \| '_ \ / _ \| '__| __/ __|" +
-            "|  _ <  __/| |_) | (_) | |  | |_\__ \ " +
-            "|_| \_\___|| .__/ \___/|_|   \__|___/" +
-            "           |_|" + estrellas())
+            " ____                        _        ".center(100) +
+            "|  _ \ ___  _ __   ___  _ __| |__ __  ".center(100) +
+            "| |_) / _ \| '_ \ / _ \| '__| __/ __| ".center(100) +
+            "|  _ <  __/| |_) | (_) | |  | |_\__ \ ".center(100) +
+            "|_| \_\___|| .__/ \___/|_|   \__|___/ ".center(100) +
+            "           |_|                        ".center(100) + estrellas())
 
 
 def replay():
@@ -413,5 +455,10 @@ def fin():
             "  \/    \/    \/    \/    \/   |_|   |___|_| \_|   \/    \/    \/    \/    \/   ".center(100))
 
 
+def commit():
+    db.execute("commit")
+
+
 def wait():
-    wait = input("Press ENTER to continue: ")
+    wait = input("\nPress ENTER to continue: ")
+
