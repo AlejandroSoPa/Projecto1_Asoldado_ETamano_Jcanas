@@ -188,3 +188,5 @@ savepoint options;
 
 
 COMMIT;
+
+select * from PROJECT_1.OPTION;

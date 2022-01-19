@@ -186,6 +186,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: 1;
+	text-align: center;
+	font-style: italic;
 }
 
 #autor1 img {
@@ -203,6 +205,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: 1;
+	text-align: center;
+	font-style: italic;
 }
 #autor2 img {
 	height: 200px;
@@ -219,6 +223,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: 1;
+	text-align: center;
+	font-style: italic;
 }
 #autor3 img {
 	height: 200px;
@@ -227,4 +233,9 @@ body {
 }
 #autor3 div {
 	margin: 10px;
+}
+
+
+.cita {
+	font-family: 'Segoe Script';
 }
