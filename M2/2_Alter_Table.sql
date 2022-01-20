@@ -37,7 +37,7 @@ modify datemodified datetime;
 
 alter table STEP
 modify ID_STEP int primary key not null auto_increment,
-modify description varchar(750) not null,
+modify description varchar(750) not null unique,
 modify adventure_end bit(1) not null,
 add constraint fk_step_adventure foreign key (id_adventure) references ADVENTURE(id_adventure),
 modify usercreate varchar(20) not null,
@@ -47,7 +47,7 @@ modify datemodified datetime;
 
 alter table PROJECT_1.OPTION
 modify ID_OPTION int primary key not null auto_increment,
-modify description varchar(750) not null,
+modify description varchar(750) not null unique,
 modify answer varchar(50) not null,
 modify next_step int not null,
 add constraint fk_options_step foreign key (id_step) references STEP(id_step),

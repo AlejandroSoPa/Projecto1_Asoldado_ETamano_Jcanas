@@ -83,18 +83,7 @@ INSERT ignore INTO ADVENTURE (name,description,usercreate,datecreated) VALUES (
 savepoint adventures;
 
 
-insert ignore into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) values (
-1,
-1,
-current_user(),
-current_timestamp()
-);
-
-
-savepoint adventure_characters;
-
-
-insert into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 'Después de un largo día de trabajo decides ir a casa directamente. Por el camino te das cuenta que sale un ruido de una caja tirada al lado del supermercado.',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='La caja'),
@@ -102,7 +91,7 @@ current_user(),
 current_timestamp()
 );
 
-insert into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 'Decides dejar la caja e irte a casa para poder descansar. Al día siguiente vuelves a pasar por la misma calle pero ya no está la caja, preguntas al dueño del supermercado si sabe algo de lo que ha ocurrido con la caja. El dueño te muestra el periódico. En este hay una noticia el la que se muestra como unos gatos bebes se ven víctimas de un perro callejero, muriendo todos. Te das cuenta al momento. En esa caja estaban lo gatitos. En ese momento una sensación de culpa te invade el cuerpo y te preguntas si los podias haber salvado.',
 1,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='La caja'),
@@ -110,7 +99,7 @@ current_user(),
 current_timestamp()
 );
 
-insert into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 'Abres la caja y ves a 3 gatos bebes en condiciones terribles. Ves que estan encima de otro gato, pero este está muerto. Tiene pinta de que era la madre y abandonaron a los 4 en cuanto ella dió a luz. Que vas a hacer con los gatos?',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='La caja'),
@@ -118,7 +107,7 @@ current_user(),
 current_timestamp()
 );
 
-insert into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 'Decides llevarlos a una refugio de gatos. Allí te atiende una señorita llamada Marta la cual llama tu atencion favorablemente por la amabilidad y el cariño que les da a los gatos. Ella te agradece que los hayas traido y te invita a que vayas y juegues con ellos todos los dias que quieras. Os intercambiais teléfonos y quedáis para veros otro día.',
 1,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='La caja'),
@@ -126,7 +115,7 @@ current_user(),
 current_timestamp()
 );
 
-insert into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 'Decides llevártelos a casa. Te tomas el día siguiente libre en tu trabajo para llevarlos al veterinario y ver en que situación están. La veterinaria te da las gracias por salvarlos y te dice que están estables, pero no en buena condiciones. Con un buen cuidado, al mes o mes y medio podrían estar en condiciones perfectas. Esas palabras te animan y te las repites una y otra vez de vuelta a casa, pero por el camino aparece un perro callejero. El perro huele a los gatos y se pone agresivo. Te ataca, pero lo contienes para que no ataque a los gatos y decides pedir ayuda. Varios vecinos te ven y van en tu auxilio. Al final del dia apareces en un telediario, donde elogian tu valiente acto.',
 1,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='La caja'),
@@ -135,10 +124,170 @@ current_timestamp()
 );
 
 
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Abres los ojos tras lo que parece un largo parpadeo…
+…Estás sentado en un vagón de tren, completamente vacío, que avanza por un túnel. Sientes las vibraciones del traqueteo y el ocasional parpadeo de las luces…
+…Excepto por que está vacío, cosa que a veces pasa, no hay nada fuera de lo normal…
+Recuerdas vagamente que estás volviendo a casa, sin embargo, no recuerdas de dónde vienes. ¿Del trabajo?...¿De la compra?...-Te preguntas. No pareces llevar nada encima que pueda darte alguna pista y decides ignorar la cuestión.
+Pese a que la situación resulta cotidiana, sientes que algo está fuera de lugar…
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Diriges tu mirada al plano de ruta en la pared del vagón.
+-No, no me he equivocado de tren.-Piensas; sin embargo no eres capaz de recordar que ponía en el plano; Extraño…
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Una vez más vuelves a observar el plano de ruta con el mismo resultado.
+-¿Serà que estoy cansado y no puedo concentrarme para leer?
+-Piensas-
+-¿Quizás podría esperar a que digan la pròxima parada por megafonía?
+Estás cansado y confuso, aún así mantienes la calma.
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Rebuscas en tus bolsillos con ambas manos con tal de ver si lo llevas todo.
+-Llaves…Cartera…-Piensas para ti mismo-Lo… llevo todo…
+No recuerdas tener prisa por llegar a ningún compromiso tampoco.
+Pese a que no pareces haber olvidado nada la sensación perdura…
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Te echas para atràs en tu asiento y suspiras mirando el techo del vagón. La sensación de que algo está fuera de lugar sigue rondando en tu cabeza pero no se te ocurre que puede ser…',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Se oyen las interferèncias de la megafonía y suena el anuncio de próxima parada. Escuchas atentamente…
+
+-...-
+
+El anuncio tiene un extraño efecto sobre tí: por un lado te transmite una sensación de tranquilidad, por el otro, sientes que no has entendido ni una palabra de lo que decía.
+Intentas recordar inútilmente el mensaje…Silencio… Un cosquilleo escalofriante te recorre el cuerpo de abajo a arriba y empiezas a lanzar miradas esquivas a todo tu alrededor. No hay nadie…no hay nada raro… Entonces… que es lo que sientes…
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Como quien se levanta para cambiar de vagón caminas por el pasillo entre los asientos, esquivando las barandillas.
+Tu corazón se acelera por momentos y los movimientos del tren te hacen perder el equilibrio momentáneamente.
+Ves pasar a gran velocidad un tren en sentido contrario a través de la ventana. Lo miras pero no consigues ver nada más que un borrón… Va muy ràpido.
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Con cada paso sientes que tu cuerpo se hace más pesado. La sensación de que algo va mal aumenta y se apodera de tu cuerpo. Tu visión se inunda de lágrimas, tu corazón late cual tambor y un seísmo sacude tu cuerpo. Sientes que has de salir de ahí…
+Las vibraciones del tren aumentan a cada momento. Sientes que todo va demasiado rápido.
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Sentado, intentas tranquilizarte y decides hacer recapitulación de lo que habías hecho antes en el día.
+
+Por más que lo intentas tus recuerdos anteriores a subirte al tren aparecen borrosos, como la estática de la televisión. Las pocas imágenes y sonidos que recuerdas son inconexos, desordenados, una mezcla de trozos de toda tu vida unos sobre otros, sin orden ni lógica.
+Notas que tu corazón se acelera por momentos…
+
+Por la ventana vislumbras pasar de reojo otro tren a gran velocidad en sentido contrario. Como metáfora de tus pensamientos lo percibes de forma borrosa, con flashes de luz y sonidos que se sobreponen entre ellos.
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Las aceleradas pulsaciones de tu corazón se transforman en lágrimas en tus ojos. Sientes que te asfixias, tu respiración se acelera, y lo que antes era una sensación al fondo de tu cabeza ahora se ha convertido en verdadero pánico.
+Las vibraciones del convoy aumentan exponencialmente y se hacen indistinguibles de tus propios temblores de terror.
+Sientes que has de salir, pero… ¿¡Cómo!?
+Todo parece acelerarse.
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Irracionalmente le haces caso a tus instintos y  desesperadamente buscas una salida a esta situación.
+
+Las ahora bruscas vibraciones del tren hacen que te caigas y no puedas avanzar. Por la cabeza se te pasa la idea de que has de detener el tren y sin dejar la mirada quieta buscas la palanca de freno de emergencia.
+
+Ponerte de pié te parece imposible, tus extremidades parecen pesarte y solo consigues arrastrarte unos centímetros. Tu mirada se torna borrosa y oscura.
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Tus dedos casi parecen rozarla, sin embargo, esta parece alejarse.
+
+De repente el movimiento del tren se para en seco. Sientes que sales disparado y tu mirada se vuelve completamente negra.
+-¿He muerto?-piensas
+',
+0,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
+'Abres los ojos de nuevo y, para tu sorpresa, te encuentras en lo que parece ser un húmedo mar de telas. No hay fuego, no hay gritos…
+Estiras ambos brazos hacia arriba con la intención de nadar pero, en vez de impulsarte, la tela se desliza por ellos revelando lo que parece ser una luz de techo.
+De un salto levantas el torso y observas el lugar en penumbra… Es tu habitación.
+
+¿Era…un sueño?
+Observas a tu alrededor aún confundido, deseando que sea verdad…
+',
+1,
+(select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
+current_user(),
+current_timestamp()
+);
+
+
+
+
 savepoint steps;
 
 
-insert into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
+insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Abres la caja para comprobar que hay dentro.',
 '¿Que será?',
 3,
@@ -147,7 +296,7 @@ current_user(),
 current_timestamp()
 );
 
-insert into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
+insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Dejas la caja cerrada porque no es de tu incumbencia.',
 'No es mi problema',
 2,
@@ -156,7 +305,7 @@ current_user(),
 current_timestamp()
 );
 
-insert into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
+insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Decides llevartelos a casa y cuidarlos tu mismo.',
 'No puedo dejarlos aquí',
 4,
@@ -165,7 +314,7 @@ current_user(),
 current_timestamp()
 );
 
-insert into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
+insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Decides llevarlos a algún lugar en el que se puedan hacerse cargo de ellos.',
 'No puedo dejarlos aquí, pero tampoco llevármelos',
 5,
@@ -174,7 +323,7 @@ current_user(),
 current_timestamp()
 );
 
-insert into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
+insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Cierras la caja y te vas a casa.',
 'Problema de otro',
 2,
@@ -184,9 +333,19 @@ current_timestamp()
 );
 
 
+
+insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
+'',
+'',
+,
+,
+current_user(),
+current_timestamp()
+);
+
+
 savepoint options;
 
 
 COMMIT;
-
-select * from PROJECT_1.OPTION;
+SELECT * from STEP;
