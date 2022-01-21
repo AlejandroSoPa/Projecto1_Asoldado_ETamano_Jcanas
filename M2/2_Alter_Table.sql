@@ -58,7 +58,7 @@ modify datemodified datetime;
 
 alter table ROUND
 modify ID_ROUND int primary key not null unique auto_increment,
-modify date datetime not null unique,
+modify date datetime not null,
 modify time datetime not null,
 add constraint fk_round_user foreign key (id_user) references USER(id_user),
 add constraint fk_round_character foreign key (id_character) references PROJECT_1.CHARACTER(id_character),

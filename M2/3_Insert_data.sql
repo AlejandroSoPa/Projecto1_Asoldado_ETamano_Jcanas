@@ -1,3 +1,6 @@
+use PROJECT_1;
+
+
 start transaction;
 
 
@@ -72,15 +75,69 @@ INSERT ignore INTO ADVENTURE (name,description,usercreate,datecreated) VALUES (
  'Un viaje en tren aparentemente normal da un giro inesperado que te hará cuestionar hasta que punto las cosas són reales o una ilusión',
  current_user() ,
  current_timestamp());
- 
- INSERT ignore INTO ADVENTURE (name,description,usercreate,datecreated) VALUES (
- 'Among us',
- 'Todos los personajes han decidido pasar la tarde jugando una partida al Among Us. Tienes que adivinar quién es el impostor y sacarlo de la nave antes de que mate a 4 personas.',
- current_user(),
- current_timestamp());
 
 
 savepoint adventures;
+
+
+replace into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) VALUES (
+1,
+2,
+ current_user(),
+ current_timestamp()
+);
+
+replace into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) VALUES (
+2,
+1,
+ current_user(),
+ current_timestamp()
+);
+
+replace into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) VALUES (
+3,
+2,
+ current_user(),
+ current_timestamp()
+);
+
+replace into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) VALUES (
+4,
+1,
+ current_user(),
+ current_timestamp()
+);
+
+replace into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) VALUES (
+5,
+1,
+ current_user(),
+ current_timestamp()
+);
+
+replace into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) VALUES (
+5,
+2,
+ current_user(),
+ current_timestamp()
+);
+
+replace into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) VALUES (
+6,
+1,
+ current_user(),
+ current_timestamp()
+);
+
+replace into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) VALUES (
+7,
+2,
+ current_user(),
+ current_timestamp()
+);
+
+
+savepoint step_adventures;
 
 
 insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
@@ -321,8 +378,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 '¿Me he equivocado de tren?',
 'Diriges tu mirada al plano de ruta en la pared del vagón.',
-2,
-1,
+7,
+6,
 current_user(),
 current_timestamp()
 );
@@ -330,8 +387,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 '¿Me he olvidado algo?',
 'Rebuscas en tus bolsillos con ambas manos con tal de ver si lo llevas todo.',
-4,
-1,
+9,
+6,
 current_user(),
 current_timestamp()
 );
@@ -339,8 +396,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'No pasa nada…',
 'Te echas para atràs en tu asiento y suspiras mirando el techo del vagón.',
-5,
-1,
+10,
+6,
 current_user(),
 current_timestamp()
 );
@@ -349,8 +406,8 @@ insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercr
 'Vuelves a mirar el plano',
 '-Vamos %personaje%, concéntrate.-
 Una vez más vuelves a observar el plano de ruta con el mismo resultado.',
-3,
-2,
+8,
+7,
 current_user(),
 current_timestamp()
 );
@@ -358,8 +415,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 '¿Me he olvidado de algo?',
 'Rebuscas en tus bolsillos con ambas manos con tal de ver si lo llevas todo.',
-4,
-2,
+9,
+7,
 current_user(),
 current_timestamp()
 );
@@ -367,8 +424,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 '¿Serà que me he equivocado de tren?',
 'Diriges tu mirada al plano de ruta en la pared del vagón.',
-2,
-4,
+7,
+9,
 current_user(),
 current_timestamp()
 );
@@ -376,8 +433,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Ignoras la perturbadora sensación y continuas sentado.',
 'Te echas para atràs en tu asiento y suspiras mirando el techo del vagón.',
-5,
-4,
+10,
+9,
 current_user(),
 current_timestamp()
 );
@@ -385,8 +442,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Vuelves la mirada y agudizas tus oídos a la espera de que suene el anuncio',
 'Te echas para atràs en tu asiento y suspiras mirando el techo del vagón.',
-5,
-3,
+10,
+8,
 current_user(),
 current_timestamp()
 );
@@ -394,8 +451,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Ignoras la perturbadora sensación y continuas sentado.',
 'Te echas para atràs en tu asiento y suspiras mirando el techo del vagón.',
-5,
-2,
+10,
+7,
 current_user(),
 current_timestamp()
 );
@@ -403,8 +460,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Continuas esperando',
 'Se oyen las interferèncias de la megafonía y suena el anuncio de próxima parada. Escuchas atentamente…',
-6,
-5,
+11,
+10,
 current_user(),
 current_timestamp()
 );
@@ -412,8 +469,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Intentas tranquilizarte y decides hacer recapitulación de lo que habías hecho antes en el día.',
 'Sentado, intentas tranquilizarte y decides hacer recapitulación de lo que habías hecho antes en el día.',
-9,
-6,
+14,
+11,
 current_user(),
 current_timestamp()
 );
@@ -421,8 +478,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Decides investigar el tren',
 'Como quién se levanta para cambiar de vagón caminas por el pasillo entre los asientos, esquivando las barandillas.',
-7,
-6,
+12,
+11,
 current_user(),
 current_timestamp()
 );
@@ -430,8 +487,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Continúas avanzando',
 'Caminas paso a paso',
-8,
-7,
+13,
+12,
 current_user(),
 current_timestamp()
 );
@@ -439,8 +496,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Te levantas en busca de una salida',
 'Irracionalmente le haces caso a tus instintos y desesperadamente buscas una salida a esta situación.',
-11,
-8,
+16,
+13,
 current_user(),
 current_timestamp()
 );
@@ -448,8 +505,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Continúas sentado',
 'Continúas sentado, la intrigante sensación aumenta',
-10,
-9,
+15,
+14,
 current_user(),
 current_timestamp()
 );
@@ -457,8 +514,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Te levantas en busca de una salida',
 'Irracionalmente le haces caso a tus instintos y desesperadamente buscas una salida a esta situación.',
-11,
-10,
+16,
+15,
 current_user(),
 current_timestamp()
 );
@@ -466,8 +523,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Levantas la mano hacia la palanca',
 'Alzas la mano y estiras los dedos',
-12,
-11,
+17,
+16,
 current_user(),
 current_timestamp()
 );
@@ -475,8 +532,8 @@ current_timestamp()
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 '...',
 '...',
-13,
-12,
+18,
+17,
 current_user(),
 current_timestamp()
 );
@@ -486,4 +543,4 @@ savepoint options;
 
 
 COMMIT;
-SELECT * from STEP;
+SELECT * from PROJECT_1.OPTION;
