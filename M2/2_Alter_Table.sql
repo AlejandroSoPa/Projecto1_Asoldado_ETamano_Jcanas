@@ -48,7 +48,7 @@ modify datemodified datetime;
 alter table PROJECT_1.OPTION
 modify ID_OPTION int primary key not null auto_increment,
 modify description varchar(750) not null unique,
-modify answer varchar(50) not null,
+modify answer varchar(750) not null,
 modify next_step int not null,
 add constraint fk_options_step foreign key (id_step) references STEP(id_step),
 modify usercreate varchar(20) not null,
@@ -58,8 +58,8 @@ modify datemodified datetime;
 
 alter table ROUND
 modify ID_ROUND int primary key not null unique auto_increment,
-modify date datetime not null,
-modify time datetime not null,
+modify date date not null,
+modify time time not null,
 add constraint fk_round_user foreign key (id_user) references USER(id_user),
 add constraint fk_round_character foreign key (id_character) references PROJECT_1.CHARACTER(id_character),
 add constraint fk_round_adventure foreign key (id_adventure) references ADVENTURE(id_adventure),

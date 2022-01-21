@@ -7,6 +7,9 @@ start transaction;
 INSERT ignore INTO USER (username,password,usercreate,datecreated)
 VALUES ('TestUser', 'TestPassword', current_user() , current_timestamp());
 
+INSERT ignore INTO USER (username,password,usercreate,datecreated)
+VALUES ('MrPolla', 'mandaCoj#nes', current_user() , current_timestamp());
+
 
 savepoint users;
 
@@ -79,6 +82,9 @@ INSERT ignore INTO ADVENTURE (name,description,usercreate,datecreated) VALUES (
 
 savepoint adventures;
 
+
+truncate CHARACTER_ADVENTURE;
+start transaction;
 
 replace into CHARACTER_ADVENTURE (ID_CHARACTER,ID_ADVENTURE,usercreate,datecreated) VALUES (
 1,
@@ -188,8 +194,7 @@ Abres los ojos tras lo que parece un largo parpadeo…
 …Estás sentado en un vagón de tren, completamente vacío, que avanza por un túnel. Sientes las vibraciones del traqueteo y el ocasional parpadeo de las luces…
 …Excepto por que está vacío, cosa que a veces pasa, no hay nada fuera de lo normal…
 Recuerdas vagamente que estás volviendo a casa, sin embargo, no recuerdas de dónde vienes. ¿Del trabajo?...¿De la compra?...-Te preguntas. No pareces llevar nada encima que pueda darte alguna pista y decides ignorar la cuestión.
-Pese a que la situación resulta cotidiana, sientes que algo está fuera de lugar…
-',
+Pese a que la situación resulta cotidiana, sientes que algo está fuera de lugar…',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -197,8 +202,7 @@ current_timestamp()
 );
 
 insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
-'-No, no me he equivocado de tren.-Piensas; sin embargo no eres capaz de recordar que ponía en el plano; Extraño…
-',
+'-No, no me he equivocado de tren.-Piensas; sin embargo no eres capaz de recordar que ponía en el plano; Extraño…',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -220,8 +224,7 @@ current_timestamp()
 insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 '-Llaves…Cartera…-Piensas para ti mismo-Lo… llevo todo…
 No recuerdas tener prisa por llegar a ningún compromiso tampoco.
-Pese a que no pareces haber olvidado nada la sensación perdura…
-',
+Pese a que no pareces haber olvidado nada la sensación perdura…',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -239,8 +242,7 @@ current_timestamp()
 insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 '-...-
 El anuncio tiene un extraño efecto sobre tí, %personaje%: por un lado te transmite una sensación de tranquilidad, por el otro, sientes que no has entendido ni una palabra de lo que decía.
-Intentas recordar inútilmente el mensaje…Silencio… Un cosquilleo escalofriante te recorre el cuerpo de abajo a arriba y empiezas a lanzar miradas esquivas a todo tu alrededor. No hay nadie…no hay nada raro… Entonces… que es lo que sientes…
-',
+Intentas recordar inútilmente el mensaje…Silencio… Un cosquilleo escalofriante te recorre el cuerpo de abajo a arriba y empiezas a lanzar miradas esquivas a todo tu alrededor. No hay nadie…no hay nada raro… Entonces… que es lo que sientes…',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -249,8 +251,7 @@ current_timestamp()
 
 insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 'Tu corazón se acelera por momentos y los movimientos del tren te hacen perder el equilibrio momentáneamente.
-Ves pasar a gran velocidad un tren en sentido contrario a través de la ventana. Lo miras pero no consigues ver nada más que un borrón… Va muy ràpido.
-',
+Ves pasar a gran velocidad un tren en sentido contrario a través de la ventana. Lo miras pero no consigues ver nada más que un borrón… Va muy ràpido.',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -259,8 +260,7 @@ current_timestamp()
 
 insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 'Con cada paso sientes que tu cuerpo se hace más pesado. La sensación de que algo va mal aumenta y se apodera de tu cuerpo. Tu visión se inunda de lágrimas, tu corazón late cual tambor y un seísmo sacude tu cuerpo. Sientes que has de salir de ahí…
-Las vibraciones del tren aumentan a cada momento. Sientes que todo va demasiado rápido.
-',
+Las vibraciones del tren aumentan a cada momento. Sientes que todo va demasiado rápido.',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -270,8 +270,7 @@ current_timestamp()
 insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 'Por más que lo intentas tus recuerdos anteriores a subirte al tren aparecen borrosos, como la estática de la televisión. Las pocas imágenes y sonidos que recuerdas son inconexos, desordenados, una mezcla de trozos de toda tu vida unos sobre otros, sin orden ni lógica.
 Notas que tu corazón se acelera por momentos…
-Por la ventana vislumbras pasar de reojo otro tren a gran velocidad en sentido contrario. Como metáfora de tus pensamientos lo percibes de forma borrosa, con flashes de luz y sonidos que se sobreponen entre ellos.
-',
+Por la ventana vislumbras pasar de reojo otro tren a gran velocidad en sentido contrario. Como metáfora de tus pensamientos lo percibes de forma borrosa, con flashes de luz y sonidos que se sobreponen entre ellos.',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -290,8 +289,7 @@ current_timestamp()
 );
 
 insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
-'Las ahora bruscas vibraciones del tren hacen que te caigas y no puedas avanzar. Por la cabeza se te pasa la idea de que has de detener el tren y sin dejar la mirada quieta buscas la palanca de freno de emergencia. Ponerte de pié te parece imposible, tus extremidades parecen pesarte y solo consigues arrastrarte unos centímetros. Tu mirada se torna borrosa y oscura.
-',
+'Las ahora bruscas vibraciones del tren hacen que te caigas y no puedas avanzar. Por la cabeza se te pasa la idea de que has de detener el tren y sin dejar la mirada quieta buscas la palanca de freno de emergencia. Ponerte de pié te parece imposible, tus extremidades parecen pesarte y solo consigues arrastrarte unos centímetros. Tu mirada se torna borrosa y oscura.',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -300,10 +298,8 @@ current_timestamp()
 
 insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datecreated) values (
 'Tus dedos casi parecen rozarla, sin embargo, esta parece alejarse.
-
 De repente el movimiento del tren se para en seco. Sientes que sales disparado y tu mirada se vuelve completamente negra.
--¿He muerto?-piensas
-',
+-¿He muerto?-piensas',
 0,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -314,10 +310,8 @@ insert ignore into STEP (description,adventure_end,ID_ADVENTURE,usercreate,datec
 'Abres los ojos de nuevo y, para tu sorpresa, te encuentras en lo que parece ser un húmedo mar de telas. No hay fuego, no hay gritos…
 Estiras ambos brazos hacia arriba con la intención de nadar pero, en vez de impulsarte, la tela se desliza por ellos revelando lo que parece ser una luz de techo.
 De un salto levantas el torso y observas el lugar en penumbra… Es tu habitación.
-
 ¿Era…un sueño?
-Observas a tu alrededor aún confundido, deseando que sea verdad…
-',
+Observas a tu alrededor aún confundido, deseando que sea verdad…',
 1,
 (select ID_ADVENTURE from ADVENTURE where ADVENTURE.NAME='Tren a casa'),
 current_user(),
@@ -413,8 +407,8 @@ current_timestamp()
 );
 
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
-'¿Me he olvidado de algo?',
-'Rebuscas en tus bolsillos con ambas manos con tal de ver si lo llevas todo.',
+'¿Serà que me he olvidado de algo?',
+'Rebuscas en tus bolsillos con ambas manos con tal de ver si te falta algo.',
 9,
 7,
 current_user(),
@@ -423,7 +417,7 @@ current_timestamp()
 
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 '¿Serà que me he equivocado de tren?',
-'Diriges tu mirada al plano de ruta en la pared del vagón.',
+'Diriges tu mirada al plano de la ruta en la pared del vagón.',
 7,
 9,
 current_user(),
@@ -431,8 +425,8 @@ current_timestamp()
 );
 
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
-'Ignoras la perturbadora sensación y continuas sentado.',
-'Te echas para atràs en tu asiento y suspiras mirando el techo del vagón.',
+'Ignoras la perturbadora sensación y continuas sentado. ',
+'Te echas para atrás en tu asiento y suspiras, mirando el techo del vagón.',
 10,
 9,
 current_user(),
@@ -441,7 +435,7 @@ current_timestamp()
 
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Vuelves la mirada y agudizas tus oídos a la espera de que suene el anuncio',
-'Te echas para atràs en tu asiento y suspiras mirando el techo del vagón.',
+'Te echas para atràs en tu asiento y suspiras profundamente mirando el techo del vagón.  ',
 10,
 8,
 current_user(),
@@ -450,7 +444,7 @@ current_timestamp()
 
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
 'Ignoras la perturbadora sensación y continuas sentado.',
-'Te echas para atràs en tu asiento y suspiras mirando el techo del vagón.',
+'Te echas para atràs en tu asiento y suspiras mirando el cercano techo del vagón.',
 10,
 7,
 current_user(),
@@ -494,8 +488,8 @@ current_timestamp()
 );
 
 insert ignore into PROJECT_1.OPTION (description,answer,next_step,ID_STEP,usercreate,datecreated) values (
-'Te levantas en busca de una salida',
-'Irracionalmente le haces caso a tus instintos y desesperadamente buscas una salida a esta situación.',
+'Te levantas en busca de una salida ',
+'Irracionalmente le haces caso a tus instintos y desesperadamente buscas una salida a esta situación. ',
 16,
 13,
 current_user(),
@@ -543,4 +537,3 @@ savepoint options;
 
 
 COMMIT;
-SELECT * from PROJECT_1.OPTION;

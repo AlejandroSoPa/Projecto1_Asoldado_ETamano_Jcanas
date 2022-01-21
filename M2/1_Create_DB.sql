@@ -69,8 +69,8 @@ create table if not exists USER (
 
  create table if not exists ROUND (
  ID_ROUND int,
- date datetime,
- time datetime,
+ date date,
+ time time,
  ID_USER int,
  ID_CHARACTER int,
  ID_ADVENTURE int,
