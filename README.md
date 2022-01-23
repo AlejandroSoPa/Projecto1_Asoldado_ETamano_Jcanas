@@ -1,13 +1,15 @@
 ##Projecto1_Asoldado_ETamano_Jcanas##
 
 
-#Definició del joc:
+#Definició del joc: 
 
 
 Choose your story és un videojoc d'aventura conversacional o de text-opció en el que al jugador se li planteja una situació per mitjà d'un relat interactiu que, segons les opcions escollides per l'usuari, varía en el seu transcurs i/o desenllaç.
 
 
-#Instruccións d'instal·lació del projecte:
+ 
+ 
+ #Instruccións d'instal·lació del projecte:
 
 
 1- Descarrega els arxius .py dins de la carpeta M3
