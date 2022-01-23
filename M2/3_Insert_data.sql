@@ -7,9 +7,6 @@ start transaction;
 INSERT ignore INTO USER (username,password,usercreate,datecreated)
 VALUES ('TestUser', 'TestPassword', current_user() , current_timestamp());
 
-INSERT ignore INTO USER (username,password,usercreate,datecreated)
-VALUES ('MrPolla', 'mandaCoj#nes', current_user() , current_timestamp());
-
 
 savepoint users;
 
