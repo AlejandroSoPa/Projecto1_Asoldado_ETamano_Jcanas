@@ -16,7 +16,7 @@ Choose your story és un joc d'aventura narrativa o llibrejoc en el que encarnes
 2- Executa l'arxiu "MainCode.py" utilitzant PyCharm o qualsevol altre programa amb la capacitat d'executar arxius de Python
 
 
-3- Disfruta!
+3- Gaudeix!
 
 
 
