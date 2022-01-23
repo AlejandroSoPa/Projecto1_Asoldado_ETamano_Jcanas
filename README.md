@@ -7,6 +7,8 @@
 Choose your story és un joc d'aventura narrativa o llibrejoc en el que encarnes a un personatge per viure multiples aventures narratives de les que el transcurs de la historia i el seu resultat varien segons les teves eleccions durant el transcurs d'aquesta.
 
 
+
+
 -Instruccións d'instal·lació del projecte:
 
 
@@ -65,6 +67,8 @@ Games Played by User - Es demana que l'usuari inserti un nom d'usuari vàlid i m
 
 
 Surt del joc
+
+
 
 
 -Informació de contacte membres grup (gmail)
