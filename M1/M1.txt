@@ -1,0 +1,12 @@
+IP publica maquina virtual: 20.105.176.24
+Puerto: 3306
+Anonimous users -> No
+Database Test -> No
+
+MYSQL
+  Usuarios + contraseñas:
+    1. root + root
+    2. asoldado + Asoldado1!
+    3. etamano + Etamano1!
+    4. jcanas + Jcanas1!
+    5. profesores + Profesores1!
