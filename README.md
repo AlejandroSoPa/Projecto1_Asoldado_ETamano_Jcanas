@@ -31,6 +31,8 @@ Al executar el joc, apareixerà la pantalla de títol amb un menú principal amb
 
 
 1- Login/Logout:
+
+
 Abans de jugar, l'usuari ha d'iniciar sessió. Una vegada hagi iniciat sessió correctament, apareixerà un menú amb totes les aventures disponibles, i l'usuari haurà de seleccionar quina vol jugar, o insertar 0 per tornar al menú principal. Una vgada hagi seleccionat una aventura, es mostraran els personatges disponibles per protagonitzar-la i l'usuari haurà de seleccionar amb quin vol jugar, o insertar 0 per retornar a la selecció d'aventura. Quan s'hagi escollit un personatge, l'aventura començarà, mostrant per pantalla la situació actual de la història i unes opcions de reacció del protagonista. El jugador simplement haurà de seleccionar quina opció vol dur a terme insertant el nombre assignat a l'opció. Una vegada s'hagi escollit l'opció de l'usuari, apareixerà una resposta a la seva desició i es desenvoluparà la història, mostrant una nova situació i noves opcions.
 Al finalitzar la història, aquesta opció cambiarà a Logout, i l'usuari haurà de tancar sessió abans de poder iniciar sessió i jugar una altra vegada.
 
